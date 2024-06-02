@@ -1,6 +1,7 @@
 import {Text, View} from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import LoginButton from "./components/LoginButton";
+import React from "react";
 
 export default function App() {
 
