@@ -12,9 +12,11 @@
     "ios": {
       "supportsTablet": true
     },
-    "android": {
-    },
-    "web": {
-    }
+    "android": {},
+    "web": {},
+    "scheme": "spotifyStats",
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
