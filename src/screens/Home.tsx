@@ -12,7 +12,6 @@ const CLIENT_SECRET = SecureStore.getItem('client_secret');
 
 const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
-  tokenEndpoint: 'https://accounts.spotify.com/api/token',
 };
 
 export default function Home({navigation}: any) {
@@ -24,9 +23,10 @@ export default function Home({navigation}: any) {
   const [request, response, promptAsync] = useAuthRequest(
     {
       clientId: CLIENT_ID,
-      scopes: ['user-read-email', 'user-read-private'],
+      scopes: ['user-read-email', 'user-read-private', 'user-top-read'],
       usePKCE: false,
       redirectUri: REDIRECT_URI,
+      extraParams: {show_dialog: 'true'}
     },
     discovery
   );
@@ -37,7 +37,7 @@ export default function Home({navigation}: any) {
 
       const getAccessToken = async () => {
         try {
-          const tokenResponse = await fetch(discovery.tokenEndpoint, {
+          const tokenResponse = await fetch('https://accounts.spotify.com/api/token', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
