@@ -14,7 +14,7 @@ const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
 };
 
-export default function Home({navigation}: any) {
+export default function Login({navigation}: any) {
 
   const REDIRECT_URI = makeRedirectUri({
     scheme: "spotifyStats",
@@ -60,7 +60,7 @@ export default function Home({navigation}: any) {
 
           await SecureStore.setItemAsync('access_token', tokenData.access_token)
           
-          navigation.navigate('Profile');
+          navigation.navigate('Main');
         } catch (error) {
           console.error('Error fetching token:', error);
         }

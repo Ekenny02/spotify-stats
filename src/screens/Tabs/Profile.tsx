@@ -1,8 +1,9 @@
-import {Text, SafeAreaView, Pressable, Image} from "react-native";
-import {useEffect, useState} from "react";
-import GetData from "../api/GetData";
+import {Text, SafeAreaView, Image} from "react-native";
+import { useEffect, useState } from "react";
+import GetData from "../../api/GetData";
 
-export default function Profile({navigation}: any) {
+export default function Profile() {
+
   const [profileInformation, setProfileInformation] = useState<any>({});
 
   useEffect(() => {
@@ -11,8 +12,6 @@ export default function Profile({navigation}: any) {
       method: "GET",
     }).then((data) => {
       data["profile_picture"] = data["images"][0];
-
-      delete data["images"];
 
       const scaleFactor = 100 / data["profile_picture"]["width"];
 
