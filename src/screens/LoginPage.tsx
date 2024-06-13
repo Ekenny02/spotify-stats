@@ -14,7 +14,7 @@ const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
 };
 
-export default function Login({navigation}: any) {
+export default function LoginPage({navigation}: any) {
 
   const REDIRECT_URI = makeRedirectUri({
     scheme: "spotifyStats",
@@ -60,7 +60,7 @@ export default function Login({navigation}: any) {
 
           await SecureStore.setItemAsync('access_token', tokenData.access_token)
           
-          navigation.navigate('Main');
+          navigation.navigate('Main Page');
         } catch (error) {
           console.error('Error fetching token:', error);
         }
@@ -71,17 +71,19 @@ export default function Login({navigation}: any) {
   }, [response]);
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="flex-1 justify-center items-center gap-4">
+    <SafeAreaView id="login-page" className="flex-1">
+      <View id="header" className="flex-1 justify-center items-center gap-4">
         <Entypo
+          id="logo"
           name="spotify"
           size={70}
           color="#1d4ed8"
         />
-        <Text className="font-bold text-3xl">Spotify Stats</Text>
+        <Text id="title" className="font-bold text-3xl">Spotify Stats</Text>
       </View>
-      <View className="flex-1 justify-center items-center">
+      <View id="main-area" className="flex-1 justify-center items-center">
         <Pressable
+          id="sign-in"
           disabled={!request}
           onPress={() => promptAsync()}
           className="rounded-full bg-blue-700 w-4/5 p-3 items-center">

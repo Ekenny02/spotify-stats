@@ -1,11 +1,11 @@
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {NavigationContainer} from "@react-navigation/native";
 import Profile from "./Tabs/Profile";
-import TopArtists from "./Tabs/TopArtists";
+import Statistics from "./Tabs/Statistics";
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Entypo from '@expo/vector-icons/Entypo';
 
-export default function Main({navigation}: any) {
+export default function MainPage({navigation}: any) {
 
   const Tab = createBottomTabNavigator();
 
@@ -27,8 +27,8 @@ export default function Main({navigation}: any) {
           }}
         />
         <Tab.Screen
-          name="Top Artists"
-          component={TopArtists}
+          name="Statistics"
+          component={Statistics}
           options={{
             tabBarIcon: () => <Entypo name="bar-graph" size={24} color="black" />
           }}

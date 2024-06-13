@@ -23,12 +23,13 @@ export default function Profile() {
   }, []);
 
   return (
-    <SafeAreaView className="flex-1 justify-center items-center">
+    <SafeAreaView id="profile-tab" className="flex-1 justify-center items-center">
       <Image
+        id="picture"
         className="rounded-full"
         source={profileInformation["profile_picture"]}
       />
-      <Text className="font-bold text-xl">{profileInformation["display_name"]}</Text>
+      <Text id="name" className="font-bold text-xl">{profileInformation["display_name"]}</Text>
     </SafeAreaView>
   );
 }
