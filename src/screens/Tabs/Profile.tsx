@@ -1,10 +1,13 @@
-import {Text, SafeAreaView, Image} from "react-native";
-import { useEffect, useState } from "react";
+import {Text, SafeAreaView, Image, Pressable} from "react-native";
+import {useEffect, useState} from "react";
 import GetData from "../../api/GetData";
+import {RootState} from "../../state/store";
+import {useDispatch, useSelector} from "react-redux";
+import {updateUser} from "../../state/user/userSlice";
 
 export default function Profile() {
-
-  const [profileInformation, setProfileInformation] = useState<any>({});
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     GetData({
@@ -18,18 +21,29 @@ export default function Profile() {
       data["profile_picture"]["width"] *= scaleFactor;
       data["profile_picture"]["height"] *= scaleFactor;
 
-      setProfileInformation(data);
+      dispatch(
+        updateUser({
+          profile_picture: data["profile_picture"],
+          name: data["display_name"],
+        })
+      );
     });
   }, []);
 
   return (
-    <SafeAreaView id="profile-tab" className="flex-1 justify-center items-center">
+    <SafeAreaView
+      id="profile-tab"
+      className="flex-1 justify-center items-center">
       <Image
         id="picture"
         className="rounded-full"
-        source={profileInformation["profile_picture"]}
+        source={user["profile_picture"]}
       />
-      <Text id="name" className="font-bold text-xl">{profileInformation["display_name"]}</Text>
+      <Text
+        id="name"
+        className="font-bold text-xl">
+        {user['name']}
+      </Text>
     </SafeAreaView>
   );
 }
