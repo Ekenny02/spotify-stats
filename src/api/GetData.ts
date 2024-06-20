@@ -1,5 +1,6 @@
 import * as SecureStore from "expo-secure-store";
 
+/* Data Fetching Structured Helper */
 export default async function GetData(initialization: any) {
     const data = await fetch(`https://api.spotify.com/${initialization['extension'] + '?' + initialization['url_search_params']}`, {
         method: initialization['method'],

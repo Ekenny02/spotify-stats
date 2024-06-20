@@ -8,6 +8,7 @@ import { store } from "./state/store";
 
 const Stack = createNativeStackNavigator();
 
+/* App Main */
 export default function App() {
   setSecrets();
 

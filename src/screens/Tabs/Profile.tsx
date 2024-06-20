@@ -1,12 +1,13 @@
 import {Text, SafeAreaView, Image, Pressable} from "react-native";
 import {useEffect, useState} from "react";
 import GetData from "../../api/GetData";
-import {RootState} from "../../state/store";
 import {useDispatch, useSelector} from "react-redux";
-import {updateUser} from "../../state/user/userSlice";
+import {updateProfile} from "../../state/user/profileSlice";
+import { RootState } from "../../state/store";
 
+/* Tab Displaying User Information */
 export default function Profile() {
-  const user = useSelector((state: RootState) => state.user);
+  const user = useSelector((state: RootState) => state.profile);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -22,7 +23,7 @@ export default function Profile() {
       data["profile_picture"]["height"] *= scaleFactor;
 
       dispatch(
-        updateUser({
+        updateProfile({
           profile_picture: data["profile_picture"],
           name: data["display_name"],
         })
@@ -42,7 +43,7 @@ export default function Profile() {
       <Text
         id="name"
         className="font-bold text-xl">
-        {user['name']}
+        {user["name"]}
       </Text>
     </SafeAreaView>
   );

@@ -1,45 +1,34 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import {Text, SafeAreaView, View, FlatList} from "react-native";
 import GetData from "../../api/GetData";
 import ArtistDisplay from "../../components/ArtistDisplay";
 import {FlashList} from "@shopify/flash-list";
+import {useDispatch, useSelector} from "react-redux";
+import { RootState } from "../../state/store";
+import { addArtists, addTopSongs } from "../../state/user/ArtistsSlice";
 
+/* Tab Displaying Top Artists and Songs */
 export default function Statistics() {
-  const [topArtists, setTopArtists] = useState<Array<any>>([]);
+
+  const artistData = useSelector((state: RootState) => state.artists);
+  const dispatch: any = useDispatch();
 
   useEffect(() => {
     async function processData() {
-      const artistData = await GetData({
-        extension: "v1/me/top/artists",
-        method: "GET",
-        url_search_params: new URLSearchParams({
-          limit: "20",
-        }),
-      });
 
-      for (const artist of artistData["items"]) {
-        const artistTracks = await GetData({
-          extension: `v1/artists/${artist["id"]}/top-tracks`,
-          method: "GET",
-        });
+      await dispatch(addArtists(50));
 
-        for (let i = 0; i < 5; i++) {
-          if (!artist["top_songs"]) {
-            artist["top_songs"] = [];
-          }
-  
-          artist["top_songs"].push({
-            song_name: artistTracks["tracks"][i]["name"],
-            album_image_url: artistTracks["tracks"][i]["album"]["images"][0]["url"],
-          });
-        }
+      for (let i = 0; i < 50; i++) {
+        dispatch(addTopSongs(i));
       }
-
-      setTopArtists(artistData["items"]);
     }
 
     processData();
   }, []);
+
+  const renderItem = useCallback(({ index }) => (
+    <ArtistDisplay position={index} />
+  ), []);
 
   return (
     <SafeAreaView
@@ -55,18 +44,14 @@ export default function Statistics() {
         </Text>
       </View>
       <View className="w-full h-[95%]">
-        {topArtists && (
+        {artistData && (
           <FlashList
             id="items"
             showsVerticalScrollIndicator={false}
-            data={topArtists}
-            estimatedItemSize={20}
-            renderItem={({item, index}) => (
-              <ArtistDisplay
-                key={index}
-                artist={item}
-                position={index + 1}></ArtistDisplay>
-            )}
+            data={artistData.artists}
+            estimatedItemSize={200}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={renderItem}
           />
         )}
       </View>

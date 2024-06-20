@@ -1,26 +1,26 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
-interface userState {
+interface profileState {
     profile_picture: any,
     name: string | null
 }
 
-const initialState: userState = {
+const initialState: profileState = {
     profile_picture: null,
     name: null
 }
 
-const userSlice = createSlice({
-    name: 'user',
+const profileSlice = createSlice({
+    name: 'profile',
     initialState,
     reducers: {
-        updateUser: (state, action: PayloadAction<any>) => {
+        updateProfile: (state, action: PayloadAction<any>) => {
             state.profile_picture = action.payload['profile_picture'];
             state.name = action.payload['name'];
         }
     }
 });
 
-export const {updateUser} = userSlice.actions;
+export const { updateProfile: updateProfile } = profileSlice.actions;
 
-export default userSlice.reducer;
+export default profileSlice.reducer;

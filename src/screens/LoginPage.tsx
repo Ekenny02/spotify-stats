@@ -14,6 +14,7 @@ const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
 };
 
+/* Login Screen */
 export default function LoginPage({navigation}: any) {
 
   const REDIRECT_URI = makeRedirectUri({
