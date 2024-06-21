@@ -1,6 +1,5 @@
 import {useCallback, useEffect, useState} from "react";
 import {Text, SafeAreaView, View, FlatList} from "react-native";
-import GetData from "../../api/GetData";
 import ArtistDisplay from "../../components/ArtistDisplay";
 import {FlashList} from "@shopify/flash-list";
 import {useDispatch, useSelector} from "react-redux";
@@ -26,7 +25,7 @@ export default function Statistics() {
     processData();
   }, []);
 
-  const renderItem = useCallback(({ index }) => (
+  const renderItem = useCallback(({ index }: { index: number }) => (
     <ArtistDisplay position={index} />
   ), []);
 

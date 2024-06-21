@@ -5,14 +5,14 @@ import {RootState} from "../state/store";
 
 /* Artist Information Card Component */
 export default function ArtistDisplay(props: any) {
-  const artist = useSelector((state: any) => state.artists.artists[props.position]);
-  const topSongs = useSelector((state: any) => state.artists.artists[props.position]["top_songs"]);
+  const artist = useSelector((state: RootState) => state.artists.artists[props.position]);
+  const topSongs = useSelector((state: RootState) => state.artists.artists[props.position]["top_songs"]);
 
   return (
     <View
       id={`item-${props.position + 1}`}
       className="mx-3 my-5 flex-row">
-      {artist && topSongs && (
+      {artist && topSongs.length === 5 && (
         <>
           <View className="items-center w-[40%]">
             <Text className="absolute left-0 text-base font-bold">{props.position + 1}.</Text>
@@ -34,7 +34,7 @@ export default function ArtistDisplay(props: any) {
                 <Text
                   numberOfLines={1}
                   key={position}>
-                  {position + 1}. {song["song_name"]}
+                  {position + 1}. {song}
                 </Text>
               ))}
           </View>

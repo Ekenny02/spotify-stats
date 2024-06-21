@@ -1,6 +1,5 @@
 import {NavigationContainer} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import setSecrets from "../Secrets";
 import LoginPage from "./screens/LoginPage";
 import MainPage from "./screens/MainPage";
 import {Provider} from "react-redux";
@@ -10,8 +9,6 @@ const Stack = createNativeStackNavigator();
 
 /* App Main */
 export default function App() {
-  setSecrets();
-
   return (
     <Provider store={store}>
       <NavigationContainer>

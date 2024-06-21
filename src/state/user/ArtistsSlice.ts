@@ -1,8 +1,19 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import GetData from "../../api/GetData";
 
+interface Artist {
+    name: string,
+    id: string,
+    images: Array<any>,
+    top_songs: Array<string>
+}
 
-const initialState = {
+interface Artists {
+    artists: Artist[]
+}
+
+
+const initialState: Artists = {
     artists: []
 }
 
@@ -40,20 +51,20 @@ const artistsSlice = createSlice({
     ,
     extraReducers(builder) {
         builder.addCase(addArtists.fulfilled, (state, action) => {
-            state.artists = action.payload['items'];
+            state.artists = action.payload['items'].map((artist: any) => {
+                return {
+                    name: artist['name'],
+                    id: artist['id'],
+                    images: artist['images'],
+                    top_songs: []
+                };
+            });
         }),
-        builder.addCase(addTopSongs.fulfilled, (state, action) => {
-            for (let i = 0; i < 5; i++) {
-                if (!state.artists[action.payload[1]]["top_songs"]) {
-                    state.artists[action.payload[1]]["top_songs"] = [];
+            builder.addCase(addTopSongs.fulfilled, (state, action) => {
+                for (let i = 0; i < 5; i++) {
+                    state.artists[action.payload[1]]["top_songs"].push(action.payload[0]["tracks"][i]["name"]);
                 }
-    
-                state.artists[action.payload[1]]["top_songs"].push({
-                    song_name: action.payload[0]["tracks"][i]["name"],
-                    album_image_url: action.payload[0]["tracks"][i]["album"]["images"][0]["url"],
-                });
-            }
-        })
+            })
     }
 });
 

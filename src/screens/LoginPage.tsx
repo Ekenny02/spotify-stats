@@ -7,9 +7,6 @@ import * as SecureStore from 'expo-secure-store';
 
 WebBrowser.maybeCompleteAuthSession();
 
-const CLIENT_ID = SecureStore.getItem('client_id');
-const CLIENT_SECRET = SecureStore.getItem('client_secret');
-
 const discovery = {
   authorizationEndpoint: 'https://accounts.spotify.com/authorize',
 };
@@ -23,7 +20,7 @@ export default function LoginPage({navigation}: any) {
 
   const [request, response, promptAsync] = useAuthRequest(
     {
-      clientId: CLIENT_ID,
+      clientId: process.env.CLIENT_ID || '',
       scopes: ['user-read-email', 'user-read-private', 'user-top-read'],
       usePKCE: false,
       redirectUri: REDIRECT_URI,
@@ -42,7 +39,7 @@ export default function LoginPage({navigation}: any) {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': `Basic ${btoa(CLIENT_ID + ':' + CLIENT_SECRET)}`,
+              'Authorization': `Basic ${btoa(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET)}`,
             },
             body: new URLSearchParams({
               grant_type: 'authorization_code',
